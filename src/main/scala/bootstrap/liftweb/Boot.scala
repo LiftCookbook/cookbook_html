@@ -8,9 +8,6 @@ import sitemap._
 import Loc._
 import net.liftmodules.JQueryModule
 import net.liftweb.http.js.jquery._
-import javax.mail.internet.{MimeMessage, MimeMultipart}
-import util.Mailer
-import javax.mail.Message.RecipientType
 
 
 /**
@@ -26,6 +23,8 @@ class Boot extends Loggable {
     // Build SiteMap
     val entries = List(
       Menu.i("Home") / "index", // the simple way to declare a menu
+
+      Menu.i("Download Link") / "downloadlink",
 
       // more complex because this menu allows anything in the
       // /static path to be visible
