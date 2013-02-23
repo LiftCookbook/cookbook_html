@@ -25,6 +25,8 @@ class Boot extends Loggable {
       Menu.i("Home") / "index", // the simple way to declare a menu
 
       Menu.i("Download Link") / "downloadlink",
+      Menu.i("Pass Thru Example") / "passthru",
+
 
       // more complex because this menu allows anything in the
       // /static path to be visible
