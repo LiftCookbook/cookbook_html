@@ -27,6 +27,7 @@ class Boot extends Loggable {
 
       Menu.i("Download Link") / "downloadlink",
       Menu.i("Pass Thru Example") / "passthru",
+      Menu.i("Head merge") / "headmerge",
 
 
       // more complex because this menu allows anything in the
