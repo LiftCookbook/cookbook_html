@@ -3,12 +3,14 @@ package bootstrap.liftweb
 import net.liftweb._
 
 import common._
+import common.Full
 import http._
 import sitemap._
 import Loc._
 import net.liftmodules.JQueryModule
 import net.liftweb.http.js.jquery._
 import code.lib.CustomResourceId
+import util.NamedPF
 
 
 /**
@@ -60,6 +62,12 @@ class Boot extends Loggable {
     JQueryModule.init()
 
     CustomResourceId.init()
+
+
+    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
+      case (req,failure) =>
+        NotFoundAsTemplate(ParsePath(List("404"),"html",true,false))
+    })
 
 
   }
