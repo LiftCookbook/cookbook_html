@@ -76,6 +76,8 @@ class Boot extends Loggable {
     })
 
 
+    // Custom 403:
+
     def to403 : Box[LiftResponse] =
       for {
         session <- S.session
@@ -87,9 +89,33 @@ class Boot extends Loggable {
     LiftRules.responseTransformers.append {
       case resp if resp.toResponse.code == 403 => to403 openOr resp
       case resp => resp
-
     }
 
+
+    // More general status pages:
+
+    /*
+    LiftRules.responseTransformers.append {
+      case Customised(resp) => resp
+      case resp => resp
+    }
+
+    object Customised {
+      val definedPages = 403 :: 500 :: Nil
+
+      def unapply(resp: LiftResponse) : Option[LiftResponse] =
+        definedPages.find(_ == resp.toResponse.code).flatMap(toResponse)
+
+      def toResponse(status: Int) : Box[LiftResponse] =
+        for {
+          session <- S.session
+          req <- S.request
+          template = Templates(status.toString :: Nil)
+          response <- session.processTemplate(template, req, req.path, status)
+      } yield response
+
+    }
+    */
 
   }
 }
