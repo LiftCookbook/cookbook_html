@@ -18,7 +18,7 @@ parallelExecution in Test := false
 scalacOptions ++= Seq("-deprecation", "-unchecked")
 
 libraryDependencies ++= {
-  val liftVersion = "2.5-RC1"
+  val liftVersion = "2.5-RC2"
   Seq(
     "net.liftweb" %% "lift-webkit" % liftVersion,
     "net.liftmodules" %% "lift-jquery-module" % (liftVersion + "-2.2"),
