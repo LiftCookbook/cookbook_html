@@ -37,6 +37,7 @@ class Boot extends Loggable {
       Menu.i("Pass Thru Example") / "passthru",
       Menu.i("Head merge") / "headmerge",
       Menu.i("Forbidden") / "secret" >> Forbid,
+      Menu.i("Sharing Between Snippets") / "snippetshare",
 
       // more complex because this menu allows anything in the
       // /static path to be visible
