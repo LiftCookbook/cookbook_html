@@ -13,8 +13,9 @@ import sitemap._
 import Loc._
 import net.liftmodules.JQueryModule
 import net.liftweb.http.js.jquery._
-import code.lib.CustomResourceId
+import code.lib.{AssetCacheBuster, CustomResourceId}
 import util.NamedPF
+import java.io.{InputStream, FileReader}
 
 
 /**
@@ -68,13 +69,30 @@ class Boot extends Loggable {
     JQueryModule.InitParam.JQuery=JQueryModule.JQuery172
     JQueryModule.init()
 
-    CustomResourceId.init()
+
+
+// http://stackoverflow.com/questions/17575161/lift-cookbook-avoiding-css-and-javascript-caching/17957509#17957509
+    LiftRules.statelessDispatch.append {
+      case Req("css" :: file :: Nil, "css", _) =>
+        () => for {
+          in <- LiftRules.getResource("/css/"+file+".css").map(_.openStream)
+        } yield
+            StreamingResponse(in, () => in.close,
+              size = -1, headers = Nil, cookies = Nil, code = 200)
+    }
+
+    // Matching on /css/something.css for any The _ is saying any request type,
+
+
+
+    AssetCacheBuster.init()
+    //CustomResourceId.init()
 
     // Custom 404:
-    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
-      case (req,failure) =>
-        NotFoundAsTemplate(ParsePath(List("404"),"html",true,false))
-    })
+//    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
+//      case (req,failure) =>
+//        NotFoundAsTemplate(ParsePath(List("404"),"html",true,false))
+//    })
 
 
     // Custom 403:
